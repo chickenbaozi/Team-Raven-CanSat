@@ -6,8 +6,8 @@ import storage
 
 # SPI0 TX, SPI0 RX
 # creating spi object - SCK, MOSI, MISO
-spi = busio.SPI(clock = board.GP2, MOSI = board.GP3, MISO = board.GP4)
-cs = board.GP5
+spi = busio.SPI(clock = board.GP10, MOSI = board.GP11, MISO = board.GP12)
+cs = board.GP13
 
 # microSD card object and filesystem object
 sdcard = sdcardio.SDCard(spi, cs)
