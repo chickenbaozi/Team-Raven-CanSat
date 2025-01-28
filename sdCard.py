@@ -53,6 +53,8 @@ def cardWrite(session, count, temp, pressure, uv, signal):
         
         print("written to", path)
 
+return path
+
 
 #def testWrite(data):
 #    with open("/sd/test.txt", "w") as file:
