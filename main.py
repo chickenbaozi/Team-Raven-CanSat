@@ -8,7 +8,7 @@ import board
 import busio
 import time
 import random
-import datetime
+import storage
 
 # the black one is scl, the brown one is sda
 i2c = busio.I2C(scl = board.GP15, sda = board.GP14)
@@ -25,7 +25,7 @@ while True:
     radioMessage = radio.tryRead()
 
     if radioMessage is not None:
-        print("Radio RX {:d} {:s}".format(packet_count, str(radioMessage, "ascii")))
+        print("Radio RX {:d} {:s}".format(packetCount, str(radioMessage, "ascii")))
         rssi = radio.rssi()
         print("RSSI: {:3d}db".format(rssi))
         packetCount += 1
@@ -35,11 +35,11 @@ while True:
     temp = bmp280.read_temperature(i2c, bmp280_sensor)
     pressure = bmp280.read_pressure(i2c, bmp280_sensor)
     uv = ltr390.read_uv(i2c, ltr390_sensor)
-    
+
     # def cardWrite(filepath, count, temp, pressure, uv, signal):
-    path = datetime.datetime.now().strftime("d") + "_" + datetime.datetime.now().strftime("m") + "_" + datetime.datetime.now().strftime("Y") + "_" + datetime.datetime.now().strftime("H") + "_" + datetime.datetime.now().strftime("M") + "_" + datetime.datetime.now().strftime("S") + ".csv"
-    sdCard.cardWrite(path, packetCount, temp, pressure, uv, rssi)
-    
+
+    sdCard.cardWrite(packetCount, temp, pressure, uv, rssi)
+
     print("\n--------------------------------\n")
     print(f"Cansat Temperature: {temp}")
     print(f"Cansat Pressure:    {pressure}")
