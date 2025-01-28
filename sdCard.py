@@ -46,7 +46,7 @@ def cardWrite(session, count, temp, pressure, uv, signal):
 
     with open(path, "a") as file:
         if not session:
-            file.write("count,signal,temp,pressure,uv")
+            file.write("count,signal,temp,pressure,uv\n")
         
         string = f"{count},{signal},{temp},{pressure},{uv}\n"
         file.write(string)
