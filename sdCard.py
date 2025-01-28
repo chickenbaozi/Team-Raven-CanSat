@@ -21,40 +21,39 @@ storage.mount(vfs, "/sd")
 
 
 # filename = datetime.datetime.now() + ".csv"
-def cardWrite(count, temp, pressure, uv, signal):
+def cardWrite(session, count, temp, pressure, uv, signal):
     """ Writes to a new csv file everytime the program is restarted """
     counter = 0
 
     while True:
         path = "sd/data" + str(counter) + ".csv"
         print(path)
-
         try:
             with open(path) as tempFile:
-                counter += 1
+                print("file successfully opened, incrementing counter")
 
         except OSError:
             break
 
         except:
             print("ERROR IN CARD WRITE FUNCTION LINE 40")
-
-        #if not os.path.exists(path):
-        #    counter += 1
-        #
-        # else:
-        #     break
+        
+        counter += 1
+        
+    if session:
+        counter -= 1
+        path = "sd/data" + str(counter) + ".csv"
 
     with open(path, "a") as file:
-        time.sleep(0.2)
-        # creates writer object allowing you to write to csv
-        # file.write(["Packet Count", "RSSI", "Temperature", "Pressure", "UV"])
+        if not session:
+            file.write("count,signal,temp,pressure,uv")
+        
         string = f"{count},{signal},{temp},{pressure},{uv}\n"
         file.write(string)
+        
         print("written to", path)
-        time.sleep(0.2)
 
 
-def testWrite(data):
-    with open("/sd/test.txt", "w") as file:
-        file.write("hi world")
+#def testWrite(data):
+#    with open("/sd/test.txt", "w") as file:
+#        file.write("hi world")
