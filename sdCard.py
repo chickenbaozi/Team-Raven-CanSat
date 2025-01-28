@@ -52,9 +52,46 @@ def cardWrite(session, count, temp, pressure, uv, signal):
         file.write(string)
         
         print("written to", path)
+    return path
 
-return path
 
+def cardRead(path):
+    """Dev feature for reading the data on the Micro SD Card"""
+    # contents of data18.csv
+    # count,signal,temp,pressure,uv
+    # 0,0,22.2125,980.472,0
+    # 0,0,22.2197,980.528,0
+    # 0,0,22.2246,980.377,0
+
+    data = []
+    
+    with open(path, "r") as file:
+        content = file.readlines()
+        for c in content:
+            if c == content[0]:
+                header = c
+            else:
+                # data0 = [content.index(c)]
+                # data.append(data0 + c)
+                buffer = []
+                print("c", c)
+                
+                for i in range(c.count(",") + 1):
+                    #buffer.append(c[:c.find(",")])
+                    buffer.append(c[:c.find(",")])
+                    print("find", c.find(","))
+                    c = c[c.find(",") + 1:]
+                    print(c)
+                    
+                
+                print(buffer)
+                data.append(buffer)
+        
+        print("DATA")
+        print(data)
+        print(content)
+    
+    return data, header
 
 #def testWrite(data):
 #    with open("/sd/test.txt", "w") as file:
